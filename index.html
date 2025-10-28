@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kenang-Kenangan Kelas VI 2026</title>
+    <!-- Memuat Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Menggunakan font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* Mengatur font global dan background terang */
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1f2937; /* Warna teks default gelap */
+            line-height: 1.6;
+        }
+
+        /* CSS untuk Efek Liquid Glass (Glassmorphism) */
+        .liquid-card {
+            /* Warna latar belakang transparan */
+            background: rgba(255, 255, 255, 0.6); 
+            /* Filter blur yang memberikan efek kaca/cairan */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            /* Border tipis dengan warna yang lebih gelap */
+            border: 1px solid rgba(0, 0, 0, 0.1); 
+            /* Shadow lembut untuk kedalaman */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+            border-radius: 20px; /* Persegi panjang runcing */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        /* Efek hover untuk interaksi yang lebih hidup */
+        .liquid-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+        }
+
+        /* Styling untuk tombol utama */
+        .primary-btn {
+            background: linear-gradient(135deg, #1f2937, #000000); /* Gradient abu-abu gelap ke hitam */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .primary-btn:hover {
+            opacity: 0.85;
+            transform: translateY(-1px);
+        }
+
+        /* Gaya Khusus untuk Foto Kedalaman (Depth Photo Look) */
+        .depth-photo {
+            width: 160px; 
+            height: 180px;
+            border-radius: 1.5rem; /* rounded-3xl */ 
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+        }
+        
+        .depth-photo:hover {
+             transform: scale(1.05) translateY(-5px);
+             box-shadow: 0 30px 40px -8px rgba(0, 0, 0, 0.2), 0 15px 15px -8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Gaya Khusus untuk Tombol Navigasi di Header (Kapsul) */
+        .nav-btn {
+            padding: 8px 12px;
+            border-radius: 9999px; /* Bentuk Kapsul */
+            color: #374151; /* Default text color */
+            transition: all 0.2s ease-in-out;
+            font-weight: 500;
+            white-space: nowrap; /* Penting untuk mobile */
+        }
+
+        /* Efek hover untuk tombol navigasi */
+        .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.05); /* Sedikit latar belakang abu-abu saat hover */
+            color: #111827; /* Teks lebih gelap */
+        }
+
+        /* Efek tombol aktif (saat ini) - Menggunakan Liquid Glass mini */
+        .nav-btn.active {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            color: #111827;
+            font-weight: 600;
+        }
+
+        /* Styling untuk tombol Kembali */
+        .back-btn {
+            color: #374151;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+        .back-btn:hover {
+            color: #111827;
+        }
+        
+        /* Styling untuk tombol Musik */
+        .music-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 9999px; /* Bulat */
+            transition: all 0.2s ease;
+            color: #374151;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .music-btn:hover {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen"> 
+    
+    <!-- AUDIO ELEMENT (Disembunyikan, diatur oleh JS) -->
+    <!-- TODO: Ganti 'placeholder_music.mp3' dengan file audio loopable milik Anda. -->
+    <audio id="background-audio" loop preload="auto">
+        <source src="aud/aud.mp3" type="audio/mp3">
+        <!-- Anda bisa menambahkan source lain jika perlu, misal OGG -->
+        Sayangnya, browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 p-4 liquid-card backdrop-blur-xl">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            
+            <!-- Logo Kelas dan Tombol Musik -->
+            <div class="flex items-center space-x-3">
+                <button id="music-toggle-btn" class="music-btn" aria-label="Toggle Background Music">
+                    <!-- Icon Play (Default) -->
+                    <svg id="music-icon-play" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 10.87v6.26c0 .542.492.983.993.848l3.197-2.132a1 1 0 000-1.696z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <!-- Icon Pause (Hidden by default) -->
+                    <svg id="music-icon-pause" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </button>
+                <!-- Nama Kelas -->
+                <div class="text-xl sm:text-2xl font-bold tracking-tight text-gray-800">
+                    <span class="text-gray-900">VI</span> 2026
+                </div>
+            </div>
+            
+            <!-- Navigasi - Dibuat fleksibel untuk mobile -->
+            <nav class="flex space-x-1 sm:space-x-3 text-gray-600 p-1 liquid-card border border-gray-100 shadow-sm overflow-x-auto">
+                <a href="#" data-target="hero" class="nav-btn nav-link active text-sm sm:text-base">Beranda</a>
+                <a href="#" data-target="proyek" class="nav-btn nav-link text-sm sm:text-base">Karya Terbaik</a>
+                <a href="#" data-target="pesan" class="nav-btn nav-link text-sm sm:text-base">Pesan</a>
+            </nav>
+            <!-- Placeholder untuk menjaga tata letak -->
+            <div class="w-10 h-10"></div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-8 pt-12">
+        
+        <!-- ==================================================================== -->
+        <!-- PAGE 1: BERANDA (HERO) -->
+        <!-- ==================================================================== -->
+        <div id="page-hero" class="page-content" data-page-id="hero">
+            <section class="text-center py-12 md:py-24 animate-in fade-in duration-500">
+                
+                <!-- GAMBAR WALI KELAS - EFEK KEDALAMAN -->
+                <div class="mb-8 flex justify-center">
+                    <!-- Gunakan placeholder yang lebih jelas untuk guru -->
+                    <img src="https://placehold.co/160x180/0F766E/FFFFFF/png?text=Wali+Kelas" 
+                         alt="Dian Puspitasari S. Pd" 
+                         class="depth-photo liquid-card object-cover border-4 border-white/50">
+                </div>
+
+                <!-- H1 Kenang-Kenangan -->
+                <h1 class="text-4xl sm:text-6xl md:text-8xl font-extrabold tracking-tighter mb-6 text-gray-900">
+                    Kenang-Kenangan Masa Sekolah
+                </h1>
+                <!-- Teks Paragraf -->
+                <p class="text-xl md:text-2xl text-gray-600 max-w-4xl mx-auto mb-10">
+                    Momen, tawa, dan semua pelajaran berharga. Sebuah perjalanan yang tidak akan pernah terlupakan.
+                </p>
+                <!-- Tombol Utama - Mengubah halaman ke Karya Terbaik -->
+                <button data-target="proyek" class="page-trigger primary-btn px-8 py-3 rounded-xl text-lg font-semibold text-white shadow-xl">
+                    Lihat Karya & Momen Terbaik <span aria-hidden="true">&rarr;</span>
+                </button>
+            </section>
+        </div>
+
+
+        <!-- ==================================================================== -->
+        <!-- PAGE 2: KARYA TERBAIK (PROYEK) -->
+        <!-- ==================================================================== -->
+        <div id="page-proyek" class="page-content hidden" data-page-id="proyek">
+            <section class="py-12 md:py-24">
+                <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center text-gray-900">Karya & Cerita Unggulan</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Kartu Kenangan 1 - DATA SISWA -->
+                    <div class="liquid-card p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4 text-gray-900">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H9a1 1 0 01-1-1v-1a4 4 0 014-4h.873M15 21v-1a4 4 0 00-4-4H9a4 4 0 00-4-4V5a2 2 0 012-2h10a2 2 0 012 2v14a2 2 0 01-2 2h-1"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-800">Data Siswa</h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                Informasi kontak, hobi, dan cita-cita dari setiap siswa dan siswi kelas VI.
+                            </p>
+                        </div>
+                        <a href="#" data-target="data" class="page-trigger text-gray-800 hover:text-gray-600 font-medium flex items-center mt-4">
+                            Lihat Data 
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+                    </div>
+
+                    <!-- Kartu Kenangan 2 (Album Foto Terbaik) -->
+                    <div class="liquid-card p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4 text-gray-900">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-12 0h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-800">Album Foto Terbaik</h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                Kompilasi foto-foto kegiatan kelas, karyawisata, dan momen candid paling seru.
+                            </p>
+                        </div>
+                        <a href="#" data-target="album" class="page-trigger text-gray-800 hover:text-gray-600 font-medium flex items-center mt-4">
+                            Lihat Album 
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+                    </div>
+
+                    <!-- Kartu Kenangan 3 (Pesan dan Kesan) -->
+                    <div class="liquid-card p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="text-4xl mb-4 text-gray-900">
+                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37-2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37a1.724 1.724 0 002.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            </div>
+                            <h3 class="text-2xl font-semibold mb-2 text-gray-800">Pesan dan Kesan</h3>
+                            <p class="text-gray-600 mb-4 text-sm">
+                                Kumpulan pesan pribadi dari setiap siswa dan siswi kepada guru dan teman sekelas.
+                            </p>
+                        </div>
+                        <!-- Tombol ini sekarang mengarah ke halaman Pesan -->
+                        <a href="#" data-target="pesan" class="page-trigger text-gray-800 hover:text-gray-600 font-medium flex items-center mt-4">
+                            Tulis Pesan
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-16">
+                    <a href="#" data-target="pesan" class="page-trigger text-gray-600 hover:text-gray-900 text-lg border-b border-gray-400 hover:border-gray-900 transition">
+                        Tinggalkan Pesan Terakhir &rarr;
+                    </a>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ==================================================================== -->
+        <!-- NEW PAGE 3: DATA SISWA -->
+        <!-- ==================================================================== -->
+        <div id="page-data" class="page-content hidden" data-page-id="data">
+            <section class="py-12 md:py-24 max-w-4xl mx-auto">
+                <!-- Tombol Kembali -->
+                <button data-target="proyek" class="page-trigger back-btn mb-8 flex items-center">
+                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Kembali ke Karya Unggulan
+                </button>
+
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 text-center text-gray-900">Data Siswa Kelas VI</h2>
+                <p class="text-center text-gray-600 mb-10">Daftar nama, kontak, dan kenangan singkat dari setiap siswa.</p>
+
+                <!-- Grid Data Siswa (9 Siswa) - Menggunakan grid 2 kolom di mobile, 3 kolom di desktop -->
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                    <!-- Data Card 1 -->
+                    <div class="liquid-card p-4 text-center">
+                        <img src="https://placehold.co/80x80/1F2937/FFFFFF/png?text=B" alt="Berta Cahya Pracesar" class="rounded-full w-20 h-20 mx-auto mb-3 object-cover border border-gray-200">
+                        <h4 class="font-bold text-gray-900 text-lg">Berta Cahya Pracesar</h4>
+                        <p class="text-xs text-gray-500">Absen 1</p>
+                        <p class="text-xs mt-2 text-gray-700 italic">"Si cewek mokondo"</p>
+                    </div>
+                    <!-- Data Card 2 -->
+                    <div class="liquid-card p-4 text-center">
+                        <img src="https://placehold.co/80x80/374151/FFFFFF/png?text=D" alt="Dwi Aprilia Rahma" class="rounded-full w-20 h-20 mx-auto mb-3 object-cover border border-gray-200">
+                        <h4 class="font-bold text-gray-900 text-lg">Dwi Aprilia Rahma</h4>
+                        <p class="text-xs text-gray-500">Absen 2</p>
+                        <p class="text-xs mt-2 text-gray-700 italic">"Cegil Kelas"</p>
+                    </div>
+                    <!-- Data Card 3 -->
+                    <div class="liquid-card p-4 text-center">
+                        <img src="https://placehold.co/80x80/4B5563/FFFFFF/png?text=F" alt="Fajar Rasyid Anggoro" class="rounded-full w-20 h-20 mx-auto mb-3 object-cover border border-gray-200">
+                        <h4 class="font-bold text-gray-900 text-lg">Fajar Rasyid Anggoro</h4>
+                        <p class="text-xs text-gray-500">Absen 3</p>
+                        <p class="text-xs mt-2 text-gray-700 italic">"Sipaling usil"</p>
+                    </div>
+                    <!-- Data Card 4 -->
+                    <div class="liquid-card p-4 text-center">
+                        <img src="https://placehold.co/80x80/6B7280/FFFFFF/png?text=I" alt="Ibnu Fildzah Setiawan" class="rounded-full w-20 h-20 mx-auto mb-3 object-cover border border-gray-200">
+                        <h4 class="font-bold text-gray-900 text-lg">Ibnu Fildzah Setiawan</h4>
+                        <p class="text-xs text-gray-500">Absen 4</p>
+                        <p class="text-xs mt-2 text-gray-700 italic">"Si paling Lontong"</p>
+                    </div>
+                    <!-- Data Card 5 -->
+                    <div class="liquid-card p-4 text-center">
+                        <img src="https://placehold.co/80x80/9CA3AF/FFFFFF/png?text=M" alt="Muhammad Irkham Islahurrafa" class="rounded-full w-20 h-20 mx-auto mb-3 object-cover border border-gray-200">
+                        <h4 class="font-bold text-gray-900 text-lg">Muhammad Irkham Islahurrafa</h4>
+                        <p class="text-xs pplqaqlt-gray-500">Absen 5</p>
+                        <p class="text-xs mt-2 text-gray-700 italic">"si cilung"</p>
+                    </div>
+                    <!-- Data Card 6 -->
+                    <div class="liquid-card p-4 text-center">
+                        <img src="https://placehold.co/80x80/D1D5DB/111827/png?text=M" alt="Mutiara Febrianti Putri" class="rounded-full w-20 h-20 mx-auto mb-3 object-cover border border-gray-200">
+                        <h4 class="font-bold text-gray-900 text-lg">Mutiara Febrianti Putri</h4>
+                        <p class="text-xs text-gray-500">Absen 6</p>
+                        <p class="text-xs mt-2 text-gray-700 italic">"Bendahara 1"</p>
+                    </div>
+                    <!-- Data Card 7 -->
+                    <div class="liquid-card p-4 text-center">
+                        <img src="https://placehold.co/80x80/F3F4F6/111827/png?text=R" alt="Raisa Aulia Jannah" class="rounded-full w-20 h-20 mx-auto mb-3 object-cover border border-gray-200">
+                        <h4 class="font-bold text-gray-900 text-lg">Raisa Aulia Jannah</h4>
+                        <p class="text-xs text-gray-500">Absen 7</p>
+                        <p class="text-xs mt-2 text-gray-700 italic">"Bendahara 2"</p>
+                    </div>
+                    <!-- Data Card 8 -->
+                    <div class="liquid-card p-4 ppltext-center">
+                        <img src="https://placehold.co/80x80/292524/FFFFFF/png?text=T" alt="Tri Ahmad Yusuf" class="rounded-full w-20 h-20 mx-auto mb-3 object-cover border border-gray-200">
+                        <h4 class="font-bold text-gray-900 text-lg">Tri Ahmad Yusuf</h4>
+                        <p class="text-xs text-gray-500">Absen 8</p>
+                        <p class="text-xs mt-2 text-gray-700 italic">"Serbaguna"</p>
+                    </div>
+                    <!-- Data Card 9 -->
+                    <div class="liquid-card p-4 text-center">
+                        <img src="https://placehold.co/80x80/44403C/FFFFFF/png?text=Z" alt="Zakwan Diyas Putra Perdana" class="rounded-full w-20 h-20 mx-auto mb-3 object-cover border border-gray-200">
+                        <h4 class="font-bold text-gray-900 text-lg">Zakwan Diyas Putra Perdana</h4>
+                        <p class="text-xs text-gray-500">Absen 9</p>
+                        <p class="text-xs mt-2 text-gray-700 italic">"Komedian Kondang"</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ==================================================================== -->
+        <!-- NEW PAGE 4: ALBUM FOTO BERSAMA -->
+        <!-- ==================================================================== -->
+        <div id="page-album" class="page-content hidden" data-page-id="album">
+            <section class="py-12 md:py-24 max-w-6xl mx-auto">
+                <!-- Tombol Kembali -->
+                <button data-target="proyek" class="page-trigger back-btn mb-8 flex items-center">
+                    <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    Kembali ke Karya Unggulan
+                </button>
+
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 text-center text-gray-900">Album Foto Terbaik Kelas VI</h2>
+                <p class="text-center text-gray-600 mb-10">Kompilasi momen-momen paling berkesan, dari kegiatan hingga kelulusan.</p>
+
+                <!-- Grid Galeri Foto (Simulasi) -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    
+                    <!-- Foto 1: Karyawisata -->
+                    <div class="aspect-video liquid-card overflow-hidden">
+                        <img src="https://placehold.co/600x400/3B82F6/FFFFFF/png?text=Karyawisata+Bali" alt="Karyawisata Bali" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <!-- Foto 2: Hari Guru -->
+                    <div class="aspect-square liquid-card overflow-hidden">
+                        <img src="https://placehold.co/600x00/0 alt="Perayaan Hari Guru" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <!-- Foto 3: Pentas Seni -->
+                    <div class="aspect-video liquid-card overflow-hidden">
+                        <img src="https://placehold.co/600x400/059669/FFFFFF/png?text=Pentas+Seni+Akhir" alt="Pentas Seni Akhir Tahun" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <!-- Foto 4: Momen Candid -->
+                    <div class="aspect-square liquid-card overflow-hidden">
+                        <img src="https://placehold.co/400x400/9333EA/FFFFFF/png?text=Momen+Belajar+Kelompok" alt="Momen Belajar Kelompok" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <!-- Foto 5: Olahraga -->
+                    <div class="aspect-square liquid-card overflow-hidden">
+                        <img src="https://placehold.co/400x400/F59E0B/111827/png?text=Juara+Volley+Kelas" alt="Olahraga - Juara Volley" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <!-- Foto 6: Kelulusan -->
+                    <div class="aspect-video liquid-card overflow-hidden">
+                        <img src="https://placehold.co/600x400/14B8A6/111827/png?text=Foto+Kelulusan+Bersama" alt="Foto Kelulusan Bersama" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <!-- Foto 7: Hari Santri Nasional -->
+                    <div class="aspect-square liquid-card overflow-hidden">
+                        <img src="https://placehold.co/400x400/EF4444/FFFFFF/png?text=Hari+Santri+Nasional" alt="Hari Santri Nasional" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                    <!-- Foto 8: Pakaian Adat -->
+                    <div class="aspect-video liquid-card overflow-hidden">
+                        <img src="https://placehold.co/600x400/334155/FFFFFF/png?text=Pekan+Pakaian+Adat" alt="Pekan Pakaian Adat" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+        <!-- ==================================================================== -->
+        <!-- PAGE 5: PESAN & KESAN (KONTAK) - FIREBASE ENABLED -->
+        <!-- ==================================================================== -->
+        <div id="page-pesan" class="page-content hidden" data-page-id="pesan">
+            <section class="py-12 md:py-24 max-w-2xl mx-auto">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6 text-center text-gray-900">Tuliskan Pesanmu</h2>
+                <p class="text-center text-gray-600 mb-10">Sampaikan kesan, pesan, dan harapanmu untuk masa depan.</p>
+
+                <!-- Form Liquid Card -->
+                <form id="message-form" class="liquid-card p-8 space-y-6">
+                    <div>
+                        <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                        <input type="text" id="nama" name="nama" placeholder="Contoh: Budi Santoso"
+                               class="w-full p-3 rounded-xl border border-gray-200 focus:ring-gray-900 focus:border-gray-900 transition bg-white/70 backdrop-blur-sm" required>
+                    </div>
+
+                    <div>
+                        <label for="peran" class="block text-sm font-medium text-gray-700 mb-1">Peran (Siswa/Guru)</label>
+                        <select id="peran" name="peran"
+                                class="w-full p-3 rounded-xl border border-gray-200 focus:ring-gray-900 focus:border-gray-900 transition bg-white/70 backdrop-blur-sm" required>
+                            <option value="">Pilih Peran</option>
+                            <option value="Siswa">Siswa</option>
+                            <option value="Guru">Guru</option>
+                            <option value="Orang Tua">Orang Tua</option>
+                            <option value="Alumni">Alumni</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="pesan" class="block text-sm font-medium text-gray-700 mb-1">Pesan dan Kesan</label>
+                        <textarea id="pesan" name="pesan" rows="6" placeholder="Tuliskan kenangan, harapan, atau terima kasihmu di sini..."
+                                  class="w-full p-3 rounded-xl border border-gray-200 focus:ring-gray-900 focus:border-gray-900 transition bg-white/70 backdrop-blur-sm" required></textarea>
+                    </div>
+
+                    <!-- Tombol Kirim -->
+                    <button type="submit" class="primary-btn w-full py-3 rounded-xl text-lg font-semibold text-white shadow-xl">
+                        Kirim Pesan Kenangan
+                    </button>
+                    
+                    <!-- Area pesan status -->
+                    <div id="status-message" class="mt-4 p-3 rounded-xl text-center text-sm font-semibold hidden transition"></div>
+                </form>
+
+                <!-- Daftar Pesan yang Masuk -->
+                <div class="mt-16 pt-8 border-t border-gray-200">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-900 text-center">Dinding Kenangan (Guestbook)</h3>
+                    <!-- Kontainer tempat pesan dari Firestore akan ditampilkan -->
+                    <div id="messages-list">
+                        <p class="text-center text-gray-500 italic mt-8">Memuat pesan...</p>
+                    </div>
+                    <!-- Tempat User ID ditampilkan untuk debugging -->
+                    <p class="text-center text-xs text-gray-400 mt-4">User ID: <span id="current-user-id" class="font-mono text-gray-500">Memuat...</span></p>
+                </div>
+            </section>
+        </div>
+        
+    </main>
+
+    <!-- Footer Umum -->
+    <footer class="py-6 mt-16 border-t border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 text-center text-gray-500">
+            <p class="text-sm">&copy; 2026 Kelas VI. Kenangan yang Abadi.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript untuk Navigasi Halaman dan FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, serverTimestamp, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // ===============================================
+        // 1. FIREBASE SETUP
+        // ===============================================
+
+        // Variabel global yang disediakan oleh lingkungan Canvas
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        let db;
+        let auth;
+        let userId = null;
+        let isAuthReady = false;
+
+        // Setel tingkat log Firestore untuk debugging
+        setLogLevel('Debug');
+
+        // Inisialisasi Firebase
+        if (Object.keys(firebaseConfig).length > 0) {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            
+            // Handler Otentikasi
+            onAuthStateChanged(auth, async (user) => {
+                if (user) {
+                    userId = user.uid;
+                } else if (initialAuthToken) {
+                    try {
+                        // Coba masuk dengan token khusus
+                        await signInWithCustomToken(auth, initialAuthToken);
+                        userId = auth.currentUser.uid;
+                    } catch (error) {
+                        // Jika gagal, masuk secara anonim
+                        console.error("Error signing in with custom token, signing in anonymously:", error);
+                        await signInAnonymously(auth);
+                        userId = auth.currentUser.uid;
+                    }
+                } else {
+                    // Masuk secara anonim jika tidak ada token
+                    await signInAnonymously(auth);
+                    userId = auth.currentUser.uid;
+                }
+                
+                isAuthReady = true;
+                console.log("Firebase Auth Ready. User ID:", userId);
+                document.getElementById('current-user-id').textContent = userId || 'N/A';
+                setupMessageListener(); // Mulai mendengarkan pesan setelah otentikasi siap
+            });
+        } else {
+            console.error("Firebase configuration is missing. Cannot initialize database.");
+            isAuthReady = true; 
+        }
+
+        // ===============================================
+        // 2. FIREBASE WRITE (SUBMIT MESSAGE)
+        // ===============================================
+
+        /**
+         * Menyimpan pesan ke Firestore dalam koleksi publik.
+         */
+        async function saveMessage(nama, peran, pesan) {
+            if (!db || !userId) {
+                console.error("Database or User ID not ready.");
+                return { success: false, error: "Sistem belum siap. Silakan refresh dan coba lagi." };
+            }
+
+            // Path koleksi publik: artifacts/{appId}/public/data/class_messages
+            const messagesCollectionRef = collection(db, `artifacts/${appId}/public/data/class_messages`);
+
+            try {
+                await addDoc(messagesCollectionRef, {
+                    userId: userId,
+                    nama: nama,
+                    peran: peran,
+                    pesan: pesan,
+                    timestamp: serverTimestamp() // Menyimpan waktu server
+                });
+                return { success: true };
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                return { success: false, error: `Gagal mengirim pesan. Error: ${e.message}` };
+            }
+        }
+
+        // ===============================================
+        // 3. FIREBASE READ (DISPLAY MESSAGES)
+        // ===============================================
+
+        const messagesContainer = document.getElementById('messages-list');
+        
+        /**
+         * Menyiapkan listener real-time untuk pesan dari Firestore.
+         */
+        function setupMessageListener() {
+            if (!db || !isAuthReady) return;
+            
+            const messagesCollectionRef = collection(db, `artifacts/${appId}/public/data/class_messages`);
+            
+            // Query sederhana (orderBy dihindari, sorting dilakukan di client)
+            const q = query(messagesCollectionRef); 
+
+            onSnapshot(q, (snapshot) => {
+                let messages = [];
+                snapshot.forEach((doc) => {
+                    messages.push({ id: doc.id, ...doc.data() });
+                });
+
+                // Sortir pesan berdasarkan timestamp di memori (Terbaru di atas)
+                messages.sort((a, b) => {
+                    const timeA = a.timestamp?.toMillis() || 0;
+                    const timeB = b.timestamp?.toMillis() || 0;
+                    return timeB - timeA;
+                });
+                
+                displayMessages(messages);
+            }, (error) => {
+                console.error("Error listening to messages:", error);
+                messagesContainer.innerHTML = `<p class="text-center text-red-500 italic mt-8">Gagal memuat pesan: ${error.message}</p>`;
+            });
+        }
+
+        /**
+         * Merender daftar pesan yang diterima ke DOM.
+         */
+        function displayMessages(messages) {
+            messagesContainer.innerHTML = ''; // Hapus pesan lama
+
+            if (messages.length === 0) {
+                messagesContainer.innerHTML = '<p class="text-center text-gray-500 italic mt-8">Belum ada pesan yang masuk. Jadilah yang pertama!</p>';
+                return;
+            }
+
+            messages.forEach(msg => {
+                // Konversi timestamp ke format yang mudah dibaca
+                const dateStr = msg.timestamp && msg.timestamp.seconds
+                    ? new Date(msg.timestamp.seconds * 1000).toLocaleString('id-ID', { 
+                        day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' 
+                      }) 
+                    : 'Baru saja';
+                
+                // Tambahkan warna berdasarkan peran untuk visualisasi yang lebih baik
+                let roleColor = 'text-indigo-600';
+                if (msg.peran === 'Guru') {
+                    roleColor = 'text-teal-600';
+                } else if (msg.peran === 'Orang Tua') {
+                    roleColor = 'text-pink-600';
+                }
+
+                // Kartu pesan yang bergaya glassmorphism
+                const messageCard = document.createElement('div');
+                messageCard.className = 'liquid-card p-4 mb-4';
+                messageCard.innerHTML = `
+                    <div class="flex items-start justify-between mb-2 border-b border-gray-100 pb-2">
+                        <div>
+                            <p class="font-bold text-lg text-gray-800">${msg.nama}</p>
+                            <span class="text-xs ${roleColor} font-medium">${msg.peran}</span>
+                        </div>
+                        <span class="text-xs text-gray-400">${dateStr}</span>
+                    </div>
+                    <p class="text-gray-700 whitespace-pre-wrap text-sm">${msg.pesan}</p>
+                `;
+                messagesContainer.appendChild(messageCard);
+            });
+        }
+
+
+        // ===============================================
+        // 4. NAVIGATION & FORM HANDLING
+        // ===============================================
+
+        const pages = document.querySelectorAll('.page-content');
+        const triggers = document.querySelectorAll('.nav-link, .page-trigger');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const statusMessage = document.getElementById('status-message');
+        const form = document.getElementById('message-form');
+
+        /**
+         * Mengupdate status tombol navigasi yang aktif
+         */
+        function updateActiveNav(activePageId) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                
+                // Jika halaman yang aktif adalah sub-halaman, aktifkan link "Karya Terbaik"
+                let targetId = activePageId;
+                if (targetId === 'data' || targetId === 'album') {
+                    targetId = 'proyek';
+                }
+
+                if (link.getAttribute('data-target') === targetId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        /**
+         * Fungsi untuk merender halaman yang diminta
+         */
+        function renderPage(pageName) {
+            pages.forEach(page => {
+                page.classList.add('hidden');
+            });
+
+            const targetPage = document.querySelector(`[data-page-id="${pageName}"]`);
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' }); 
+                updateActiveNav(pageName); 
+            }
+        }
+
+        // Event listener untuk pengiriman formulir
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // Reset status message
+            statusMessage.classList.add('hidden');
+            statusMessage.classList.remove('bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
+            statusMessage.textContent = 'Mengirim pesan...';
+            statusMessage.classList.remove('hidden');
+            statusMessage.classList.add('bg-gray-100', 'text-gray-600'); // Loading state
+
+            const nama = document.getElementById('nama').value.trim();
+            const peran = document.getElementById('peran').value;
+            const pesan = document.getElementById('pesan').value.trim();
+
+            if (!nama || !peran || !pesan) {
+                statusMessage.textContent = '❌ Semua kolom wajib diisi.';
+                statusMessage.classList.remove('bg-gray-100', 'text-gray-600');
+                statusMessage.classList.add('bg-red-100', 'text-red-800');
+                return;
+            }
+
+            const result = await saveMessage(nama, peran, pesan);
+
+            if (result.success) {
+                statusMessage.textContent = '✅ Terima kasih! Pesan kenangan Anda telah berhasil dikirim.';
+                statusMessage.classList.remove('bg-gray-100', 'text-gray-600');
+                statusMessage.classList.add('bg-green-100', 'text-green-800');
+                form.reset(); // Kosongkan formulir
+            } else {
+                statusMessage.textContent = `⚠️ Gagal mengirim: ${result.error}`;
+                statusMessage.classList.remove('bg-gray-100', 'text-gray-600');
+                statusMessage.classList.add('bg-red-100', 'text-red-800');
+            }
+            
+            // Sembunyikan pesan status setelah 8 detik
+            setTimeout(() => {
+                statusMessage.classList.add('hidden');
+            }, 8000);
+        });
+
+        // Tambahkan event listener untuk navigasi
+        triggers.forEach(trigger => {
+            trigger.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetPageId = this.getAttribute('data-target');
+                if (targetPageId) {
+                    renderPage(targetPageId);
+                }
+            });
+        });
+
+
+        // ===============================================
+        // 5. MUSIC PLAYER LOGIC
+        // ===============================================
+        
+        const audio = document.getElementById('background-audio');
+        const musicToggleBtn = document.getElementById('music-toggle-btn');
+        const playIcon = document.getElementById('music-icon-play');
+        const pauseIcon = document.getElementById('music-icon-pause');
+        
+        let isPlaying = false;
+
+        function updateMusicIcon() {
+            if (isPlaying) {
+                playIcon.classList.add('hidden');
+                pauseIcon.classList.remove('hidden');
+                musicToggleBtn.setAttribute('aria-label', 'Pause Background Music');
+            } else {
+                playIcon.classList.remove('hidden');
+                pauseIcon.classList.add('hidden');
+                musicToggleBtn.setAttribute('aria-label', 'Play Background Music');
+            }
+        }
+        
+        /**
+         * Mengaktifkan atau menonaktifkan musik latar.
+         * Catatan: Karena batasan browser, pemutaran otomatis (autoplay) 
+         * biasanya diblokir hingga ada interaksi pengguna (user interaction).
+         */
+        musicToggleBtn.addEventListener('click', async () => {
+            if (isPlaying) {
+                audio.pause();
+                isPlaying = false;
+                console.log("Music Paused.");
+            } else {
+                // Mencoba memutar audio
+                try {
+                    // Gunakan play() yang mengembalikan Promise
+                    await audio.play();
+                    isPlaying = true;
+                    console.log("Music Playing.");
+                } catch (error) {
+                    // Handle error jika pemutaran gagal (misalnya, file tidak ditemukan)
+                    console.error("Error playing audio:", error);
+                }
+            }
+            updateMusicIcon();
+        });
+        
+        // Memastikan ikon diperbarui jika status audio berubah (misal: selesai looping)
+        audio.addEventListener('play', () => { isPlaying = true; updateMusicIcon(); });
+        audio.addEventListener('pause', () => { isPlaying = false; updateMusicIcon(); });
+        audio.addEventListener('error', (e) => {
+            console.error("Audio Load Error:", e);
+            // Nonaktifkan tombol jika ada error file
+            musicToggleBtn.disabled = true;
+            musicToggleBtn.style.opacity = '0.5';
+        });
+
+        // Tampilkan halaman Beranda saat pertama kali dimuat
+        window.onload = () => {
+             renderPage('hero');
+             updateMusicIcon(); // Pastikan ikon awal benar (Pause/Play)
+             console.log("Aplikasi Kenang-Kenangan multi-halaman siap. VI 2026!");
+        };
+    </script>
+</body>
+</html>
+
